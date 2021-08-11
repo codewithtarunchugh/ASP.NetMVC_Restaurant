@@ -14,6 +14,7 @@
 
         $("#btnAddtoList").click(function () { AddToTheItem(); });
         $("input[type=text]").change(function () { CalculateSubTotal(); });
+        $("input[type=text]").keyup(function () { CalculateBalance(); });
     });
 </script>
 <script type="text/javascript">
@@ -43,6 +44,20 @@
         FinalItemTotal();
         ResetItem();
     }
+    function CalculateBalance() {
+        var FinalAmount = $("#txtPaymentTotal").val();
+        var PaymentAmount = $("#txtPaymentAmount").val();
+        var ReturnAmount = $("#txtReturnTotal").val();
+        var BalanceAmount = parseFloat(FinalAmount) - parseFloat(PaymentAmount) + parseFloat(ReturnAmount);
+        $("#txtBalance").val(parseFloat(BalanceAmount).toFixed(2));
+        if (parseFloat(BalanceAmount) == 0) {
+
+            $("#btnPayment").removeAttr('disabled');
+        }
+        else {
+            $("#btnPayment").attr('disabled', "disabled");
+        }
+    }
     function FinalItemTotal() {
 
         $("#txtFinalTotal").val("0.00");
@@ -54,6 +69,8 @@
             FinalTotal += Total;
         });
         $("#txtFinalTotal").val(parseFloat(FinalTotal).toFixed(2));
+        $("#txtPaymentTotal").val(parseFloat(FinalTotal).toFixed(2));
+        $("#txtBalance").val(parseFloat(FinalTotal).toFixed(2));
     }
     function ResetItem() {
         $("#txtUnitPrice").val('');
@@ -195,6 +212,45 @@
     </table>
 </fieldset>
 
-<div style="margin-top:50px">
-    <input style="float:right" type="button" value="save" name="save" id="btnSaveOrder" class="btn btn-primary" />
+<div style="margin-top:10px">
+
+    <input data-backdrop="static" data-keydrop="false" data-toggle="modal" data-target="#divPayment" style="float:right" type="button" value="save" name="CheckOut" id="btnCheckOut" class="btn btn-primary" />
+</div>
+<div id="divPayment" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="moda-title">Payment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container" style="width:100%">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            Payment Total:
+                            <input style="text-align:right" type="text" id="txtPaymentTotal" readonly="readonly" value="0.00" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            Payment Amount:
+                            <input style="text-align:right" type="text" id="txtPaymentAmount" value="0.00" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            Return Total:
+                            <input type="text" style="text-align:right" id="txtReturnTotal" value="0.00" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            Balance Amount:
+                            <input type="text" style="text-align:right" id="txtBalance" readonly="readonly" value="0.00" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" disabled="disabled" id="btnPayment" value="Payment">Payment</button>
+                <button class="btn btn-danger" id="btnClose" data-dismiss="modal" value="Close">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
