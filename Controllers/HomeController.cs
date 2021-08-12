@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ASP.NetMVC_Restaurant.Models;
 using ASP.NetMVC_Restaurant.Repository;
+using ASP.NetMVC_Restaurant.ViewModel;
 
 namespace ASP.NetMVC_Restaurant.Controllers
 {
@@ -34,6 +35,15 @@ namespace ASP.NetMVC_Restaurant.Controllers
         {
 
             return Json(objRestaurantDBEntities.Items.Single(model => model.ItemId == itemId).ItemPrice, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Index(OrderViewModel objOrderViewMode)
+        {
+            OrderRepository objOrderRepository = new OrderRepository();
+            objOrderRepository.AddOrder(objOrderViewMode);
+            return Json("Your Order has been Successfully Placed.", JsonRequestBehavior.AllowGet);
+
         }
     }
 }

@@ -15,9 +15,41 @@
         $("#btnAddtoList").click(function () { AddToTheItem(); });
         $("input[type=text]").change(function () { CalculateSubTotal(); });
         $("input[type=text]").keyup(function () { CalculateBalance(); });
+        $("#btnPayment").click(function () { FinalPayment(); });
     });
 </script>
 <script type="text/javascript">
+    function FinalPayment() {
+        var objOrderViewModel = {}
+        var ListOfOrderDetailViewModel = new Array();
+        objOrderViewModel.PaymentTypeId = $("#PaymentType").val();
+        objOrderViewModel.CustomerId = $("#Customer").val();
+        objOrderViewModel.FinalTotal = $("#txtFinalTotal").val();
+
+        $("#tblRestaurantItemList").find("tr:gt(0)").each(function () {
+            var OrderDetailViewModel = {};
+            OrderDetailViewModel.Total = parseFloat($(this).find("td:eq(5)").text());
+            OrderDetailViewModel.ItemId = parseFloat($(this).find("td:eq(0)").text());
+            OrderDetailViewModel.UnitPrice = parseFloat($(this).find("td:eq(2)").text());
+            OrderDetailViewModel.Quantity = parseFloat($(this).find("td:eq(3)").text());
+            OrderDetailViewModel.Discount = parseFloat($(this).find("td:eq(4)").text());
+            ListOfOrderDetailViewModel.push(OrderDetailViewModel);
+        });
+        objOrderViewModel.ListOfOrderDetailViewModel = ListOfOrderDetailViewModel;
+        $.ajax({
+            async: true,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(objOrderViewModel),
+            url: '/Home/Index',
+            success: function (data) { alert(data); },
+            error: function () {
+                alert("There is some problem to adding the data");
+            }
+        });
+
+    }
     function RemoveItem(itemId) {
         $(itemId).closest('tr').remove();
         FinalItemTotal();
@@ -38,7 +70,7 @@
         ItemList += "<td >" + parseFloat(Quantity).toFixed(2) + "</td>";
         ItemList += "<td >" + parseFloat(Discount).toFixed(2) + "</td>";
         ItemList += "<td >" + parseFloat(Total).toFixed(2) + "</td>";
-        ItemList += "<td > <input type = 'button' value = 'Remove' name = 'remove' class='btn btn-danger' onclick = 'RemoveItem(this)' /></td>";
+        ItemList += "<td > <input type = 'button' value = 'Remove' name = 'remove' class='btn btn-danger' style='margin-top:5px' onclick = 'RemoveItem(this)' /></td>";
         ItemList += "</tr> ";
         tblItemList.append(ItemList);
         FinalItemTotal();

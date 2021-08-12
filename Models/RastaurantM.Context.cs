@@ -28,5 +28,8 @@ namespace ASP.NetMVC_Restaurant.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrdersDetail> OrdersDetails { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
     }
 }

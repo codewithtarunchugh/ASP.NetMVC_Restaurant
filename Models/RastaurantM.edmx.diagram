@@ -5,10 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="09179af27a174600ac8f78b86781d011" Name="Diagram1">
-        <EntityTypeShape EntityType="RestaurantDBModel.Customer" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Item" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.PaymentType" Width="1.5" PointX="5.125" PointY="0.875" IsExpanded="true" />
-      </Diagram>
+        <EntityTypeShape EntityType="RestaurantDBModel.Customer" Width="1.5" PointX="0.625" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Item" Width="1.5" PointX="4.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.PaymentType" Width="1.5" PointX="2.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Order" Width="1.5" PointX="6.625" PointY="0.625" />
+        <EntityTypeShape EntityType="RestaurantDBModel.OrdersDetail" Width="1.5" PointX="9.125" PointY="0.625" />
+        <AssociationConnector Association="RestaurantDBModel.FK__OrdersDet__ItemI__1920BF5C" />
+        <AssociationConnector Association="RestaurantDBModel.FK__OrdersDet__Order__182C9B23" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Transaction" Width="1.5" PointX="11.25" PointY="0.625" />
+        <AssociationConnector Association="RestaurantDBModel.FK__Transacti__ItemI__398D8EEE" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
